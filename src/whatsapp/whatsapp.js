@@ -93,7 +93,7 @@ class WAClient {
             console.log('update state ready')
             console.log('')
 
-            await this.setStatus('sighing shell customer rearview')
+            // await this.setStatus('sighing shell customer rearview')
             // UPDATE STATE READY PADA TABLE CLIENTS DI DATABASE
             await prismaClient.client.update({
                 data: {

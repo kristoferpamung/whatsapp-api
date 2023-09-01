@@ -47,14 +47,16 @@ const initializeClient = async (req, res, next) => {
 const getClientState = async (req, res, next) => {
     try {
 
-        const result = await clientService.getInstanceState(req.body.client_name)
+        //const result = await clientService.getInstanceState(req.body.client_name);
+
+        const result = await WAClientInstanceManager[req.body.client_name].getState();
 
         res.status(200).json({
             status: true,
             data: result
         });
     } catch (error) {
-        next(e)
+        next(e);
     }
 }
 
@@ -108,9 +110,18 @@ const sendMessage = async (req, res, next) => {
 const sendMedia = async (req, res, next) => {
     try {
         const username = req.user.username;
-        const request = req.body;
+        const request = {
+            client_name: req.body.client_name,
+            target_number: req.body.target_number,
+            caption: req.body.caption
+        }
+
+        const file = req.files.file;
+        console.log(file.mimetype);
 
         // TODO: MEMANGGIL SERVICE CLIENT SEND MEDIA
+
+        const result = await clientService.sendMedia(request, username, file);
 
         // RESPONSE
         res.status(200).json({
@@ -128,6 +139,8 @@ const sendButton = async (req, res, next) => {
         const request = req.body;
 
         // TODO: MEMANGGIL SERVICE CLIENT SEND BUTTON
+        const result = await clientService.sendButtons(request, username);
+        
 
         // RESPONSE
         res.status(200).json({

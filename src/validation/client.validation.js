@@ -18,11 +18,9 @@ const sendMessageValidation = Joi.object({
     text_message: Joi.string().required()
 });
 
-// BELUM FIX KARENA REQUEST TERDAPAT UPLOAD FILE
 const sendMediaValidation = Joi.object({
     client_name: Joi.string().max(100).required(),
     target_number: Joi.string().required(),
-    file: Joi.string().required(),
     caption: Joi.string().required()
 });
 
